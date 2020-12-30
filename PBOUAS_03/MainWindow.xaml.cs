@@ -21,15 +21,43 @@ namespace PBOUAS_03
    
     public partial class MainWindow : Window
     {
+        public class Choices : ObservableObject
+        {
+            private string _choice;
+            public string Choice
+            {
+                get
+                {
+                    return _choice;
+                }
+                set
+                {
+                    _choice = value;
+                    OnPropertyChanged(nameof(Choice));
+                }
+            }
 
+        }
+       
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ListViewItem_Selected(object sender, RoutedEventArgs e)
+        private void BillSplitter_Selected(object sender, RoutedEventArgs e)
         {
+
             Page.Content = new billSplitter();
+        }
+
+        private void TaxCalculator_Selected (object sender, RoutedEventArgs e)
+        {
+            Page.Content = new taxCalculator();
+        }
+
+        private void ExpenseTracker_Selected(object sender, RoutedEventArgs e)
+        {
+            Page.Content = new expenseTracker();
         }
     }
 }

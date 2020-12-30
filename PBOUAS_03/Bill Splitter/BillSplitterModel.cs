@@ -26,6 +26,18 @@ namespace PBOUAS_03
         }
     }
 
+    public class Split
+    {
+        public string Name { get; set; }
+        public double ItemsPrice { get; set; }
+
+        public Split(string Name, double ItemsPrice)
+        {
+            this.Name = Name;
+            this.ItemsPrice = ItemsPrice;
+        }
+    }
+
     public abstract class Win // Polymorphism 
     {
         public abstract void OpenWindow();
@@ -62,15 +74,20 @@ namespace PBOUAS_03
         {
             _win.Close();
         }
-
-        public double getTotal(double Subtotal, double Discount, double Others)
+        public static void LoadData(ObservableCollection<Split> Collection, double Discount, double Fees)
         {
-            double res = 0;
-            res = (Subtotal + Others) - Discount;
-            return res;
+            List<Person> grid = BillSplitterVM.GridCollection.ToList();
+            IEnumerable<Split> groupingQuery = grid.GroupBy(data => new { data.Name }).Select(g => new Split(g.Key.Name, g.Sum(x => x.Product.Price)));
+            int numOfPeople = groupingQuery.Count();
+            Fees = Fees / numOfPeople;
+            foreach (Split item in groupingQuery)
+            {
+                item.ItemsPrice = item.ItemsPrice - ( item.ItemsPrice * (Discount/100) )+ Fees;
+                Collection.Add(item);
+            }
+
         }
     }
-
-
 }
+
 

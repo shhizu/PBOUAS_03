@@ -10,19 +10,28 @@ namespace PBOUAS_03
     public class CalculateVM : ObservableObject
     {
         public CommandHandler okButton { get; private set; }
-        public ObservableCollection<Person> ResultCollection { get; set; }
+        public ObservableCollection<Split> ResultCollection { get; set; }
         public Calculate Calculate { get; set; }
-        public double Total { get; set; }
+
+        public List<Split> Split { get; set; }
+
+        public double Total
+        {
+            get
+            {
+                return (_subtotal + _otherFees) - _discount;
+            }
+            set
+            {
+                OnPropertyChanged(nameof(Total));
+            }
+        }
         private double _discount;
         public double Discount
         {
             get
             {
-                if (_discount != 0)
-                {
                     return _discount;
-                }
-                return 0;
             }
             set
             {
@@ -30,16 +39,42 @@ namespace PBOUAS_03
                 OnPropertyChanged(nameof(Discount));
             }
         }
-        public double OtherFees { get; set; }
 
 
-        public CalculateVM(double Subtotal)
+        private double _subtotal;
+        public double Subtotal
         {
-            Calculate = new Calculate();
-            Total = Calculate.getTotal(Subtotal, Discount, OtherFees);
-            okButton = new CommandHandler(Calculate.CloseWindow);
+            get
+            {
+                return _subtotal;
+            }
+            set
+            {
+                _subtotal = value;
+                OnPropertyChanged(nameof(Subtotal));
+            }
         }
 
+        private double _otherFees;
+        public double OtherFees
+        {
+            get
+            {
+                return _otherFees;
+            }
+            set
+            {
+                _otherFees = value;
+                OnPropertyChanged(nameof(OtherFees));
+            }
+        }
 
+        public CalculateVM()
+        {
+            Calculate = new Calculate();
+            okButton = new CommandHandler(Calculate.CloseWindow);
+
+           
+        }
     }
 }

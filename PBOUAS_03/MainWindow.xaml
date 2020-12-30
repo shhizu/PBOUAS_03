@@ -5,34 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PBOUAS_03"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+         TextElement.FontWeight="Regular"
+         TextElement.FontSize="13"
+         TextOptions.TextFormattingMode="Ideal"
+         TextOptions.TextRenderingMode="Auto"
+         Background="{DynamicResource MaterialDesignPaper}"
+         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="4*"/>
-          
+
         </Grid.ColumnDefinitions>
-      
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        
+
         <!--Page Navigation-->
-        <Frame x:Name="Page" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"/>
+        <Frame x:Name="Page" Grid.Column="1"  Grid.ColumnSpan="2"
+               Grid.Row="0" Grid.RowSpan="2"/>
 
         <!--Side Panel-->
-        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Fill="RoyalBlue"/>
-        <DockPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" Background="GhostWhite">
-           
-            <ListView x:Name="sidePanel" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListViewItem  Content="Home" FontSize="20" Selected="ListViewItem_Selected"/>
-                <ListViewItem Content="Expense Tracker" FontSize="20" />
-                <ListViewItem Content="Bill Splitter" FontSize="20" Selected="ListViewItem_Selected"/>
-                <ListViewItem Content="Tax Calculator" FontSize="20" />
-            </ListView>
-        </DockPanel>
-            
+        <materialDesign:DrawerHost Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"                  
+                                   HorizontalAlignment="Left" VerticalAlignment="Stretch" >
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel Grid.RowSpan="2" Margin="0" >
+                    <TextBlock Margin="4" HorizontalAlignment="Center"
+                               Text="MENU" FontSize="20"/>
+                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        CommandParameter="{x:Static Dock.Left}"
+                        Margin="4" HorizontalAlignment="Left"
+                        Style="{DynamicResource MaterialDesignFlatButton}" 
+                         >
+                        Home
+                    </Button>
+                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        Margin="4" HorizontalAlignment="Left"
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="BillSplitter_Selected">
+                        Bill Splitter
+                    </Button>
+                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        Margin="4" HorizontalAlignment="Left"
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="ExpenseTracker_Selected">
+                        Expense Tracker
+                    </Button>
+                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                        Margin="4" HorizontalAlignment="Left"
+                        Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="TaxCalculator_Selected">
+                        Tax Calculator
+                    </Button>
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Left"
+                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                        CommandParameter="{x:Static Dock.Left}"
+                        Grid.Row="0" Grid.Column="0"  Margin="4">
+                <materialDesign:PackIcon Kind="DotsVertical" />
+            </Button>
+        </materialDesign:DrawerHost>
+
 
     </Grid>
 </Window>

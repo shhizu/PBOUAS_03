@@ -8,10 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="billSplitter">
 
-    <Grid Background="White">
+    <Grid Background="White" HorizontalAlignment="Left"  >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -21,22 +22,28 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Bill Splitter" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"  FontSize="48" Margin="100,20" TextAlignment="Center"/>
-        <Button Command="{Binding popCommand}"  Grid.Row="1" Grid.ColumnSpan="2" Margin="10,10,490,10" Content="Input Name"  FontSize="18" />
-        <DataGrid ItemsSource="{Binding GridCollection}" x:Name="dataGridOverview" Grid.ColumnSpan="2" AutoGenerateColumns="False" Grid.Row="2" Margin="10" CanUserAddRows="True">
+        <TextBlock Text="Bill Splitter" Grid.Row="0" Grid.ColumnSpan="3" Grid.RowSpan="2"  FontSize="48" Margin="100,20" TextAlignment="Center"/>
+        <Button Command="{Binding popCommand}"  Grid.Row="1" Grid.Column= "0" Margin="10,0" Content="Input Name"  FontSize="18" />
+        <Button Command="{Binding deleteCommand}" Grid.Row="1" Grid.Column="2" Content="Delete Row" Margin="10,0" FontSize="18"/>
+        <DataGrid ItemsSource="{Binding GridCollection}"
+                 Grid.ColumnSpan="3" 
+                  AutoGenerateColumns="False" 
+                  Grid.Row="2" Margin="10" CanUserAddRows="True"
+                  SelectedItem ="{Binding SelectedUser, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Items" Width="*" Binding="{Binding Product.Item}" />
                 <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Product.Price}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Text="Discount: " Grid.Row="3" VerticalAlignment="Center" Height="33" Margin="10,0" FontSize="20"/>
-        <TextBox Text="{Binding calvm.Discount, Mode=OneWayToSource}" Grid.Row="3" Margin="120,10,10,7" FontSize="20" />
-        <TextBlock Text="Sub Total:"  Grid.Row="4" VerticalAlignment="Center" Height="24" Margin="10,16,10,10" FontSize="20"/>
-        <TextBlock Text="{Binding Subtotal}" VerticalAlignment="Bottom" Grid.Row="4" Margin="120,0,22,10" FontSize="20" Height="24" />
-        <TextBlock Text="Other fees: " Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" Height="32" Margin="10,0,10,8" FontSize="20"/>
-        <TextBox Text="{Binding calvm.OtherFees, Mode=OneWayToSource}" Grid.Row="3" Grid.Column="2" Margin="120,10,10,7" FontSize="20" />
-        <Button Command="{Binding calculateCommand}" Grid.Row="4" Grid.Column="1" Content="Calculate" FontSize="18" Margin="10,10,10,7"/>
+        <TextBlock Text="Discount" Grid.Row="3" VerticalAlignment="Center" Height="34" Margin="10,8" FontSize="20"/>
+        <TextBox Text="{Binding calvm.Discount}" Grid.Row="3" Margin="120,10,10,7" FontSize="20" />
+        <TextBlock Text="%" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" Height="34" Margin="0" FontSize="20"/>
+        <TextBlock Text="Sub Total:"  Grid.Row="4" VerticalAlignment="Center" Height="30" Margin="10" FontSize="20"/>
+        <TextBlock TextWrapping="Wrap" Text="{Binding calvm.Subtotal}" VerticalAlignment="Center" Grid.Row="4" Margin="120,0,22,7" FontSize="20"  />
+        <TextBlock Text="Other fees: " Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom" Height="32" Margin="10,0,10,8" FontSize="20"/>
+        <TextBox  Text="{Binding calvm.OtherFees}" Grid.Row="3" Grid.Column="2" Margin="120,10,10,7" FontSize="20" />
+        <Button Command="{Binding calculateCommand}" Grid.Row="4" Grid.Column="2" Content="Calculate" FontSize="18" Margin="10,10,10,7"/>
 
 
     </Grid>

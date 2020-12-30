@@ -16,8 +16,8 @@ namespace PBOUAS_03
         // Command Handlers
         public CommandHandler popCommand { get; private set; }
         public CommandHandler calculateCommand { get; private set; }
+        public CommandHandler deleteCommand { get; private set;}
 
-   
 
         //// Input pop up view model
         public PopUpVM popvm { get; set; }
@@ -25,36 +25,48 @@ namespace PBOUAS_03
         // Calculate pop up view model
         public CalculateVM calvm { get; set; }
 
-        private double _subtotal;
-        public double Subtotal
-        {
-            get
-            {
-                return _subtotal;
-            }
-            set
-            {
-                _subtotal = value;
-                OnPropertyChanged(nameof(Subtotal));
-            }
-        }
 
         public static ObservableCollection<Person> GridCollection { get; set; } // Data grid in bill splitter window
+
+        private Person _selected;
+        public Person SelectedUser
+        {
+            get { return _selected; }
+            set { _selected = value; OnPropertyChanged(nameof(SelectedUser));}
        
+        }
+
         public BillSplitterVM()
         {
-
             popvm = new PopUpVM();
+
             GridCollection = new ObservableCollection<Person>();
             GridCollection.CollectionChanged += OnCollectionChanged;
+
             popCommand = new CommandHandler(popvm.PopUp.OpenWindow);
-            calvm = new CalculateVM(Subtotal);
-            calculateCommand = new CommandHandler(calvm.Calculate.OpenWindow);
+
+            deleteCommand = new CommandHandler(Delete);
+
+            calvm = new CalculateVM();
+            calculateCommand = new CommandHandler(Show);
+ 
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Subtotal = GridCollection.Sum(person => person.Product.Price);
+            calvm.Subtotal = GridCollection.Sum(person => person.Product.Price);
+        }
+
+        private void Show()
+        {
+            calvm.ResultCollection = new ObservableCollection<Split>();
+            Calculate.LoadData(calvm.ResultCollection, calvm.Discount, calvm.OtherFees);
+            calvm.Calculate.OpenWindow();
+        }
+
+        private void Delete()
+        {
+            GridCollection.Remove(SelectedUser);
         }
     }
 }

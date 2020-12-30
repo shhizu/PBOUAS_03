@@ -37,8 +37,8 @@ namespace PBOUAS_03
             PopUp = new PopUp();
             cancelButton = new CommandHandler(PopUp.CloseWindow);
             updateButton = new CommandHandler(update);
-
         }
+
 
         public void update()
         {
@@ -46,11 +46,11 @@ namespace PBOUAS_03
             foreach (Product item in _products)
             {
                 Person = new Person(item, Name);
-                BillSplitterVM.GridCollection.Insert(0, Person);
+                BillSplitterVM.GridCollection.Add(Person);
             }
             PopUpGrid = new ObservableCollection<Product>(); // Creating a new pop up grid because billsplitterVM doesnt re run PopUpVM constructor
             PopUp.CloseWindow();
-        }
 
+        }
     }
 }
