@@ -5,47 +5,75 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Data.Linq;
 
 namespace PBOUAS_03
 {
     public class ExpenseOverviewVM : ObservableObject
     {
+
+        // Database and Datagrid
+        public static ExpenseLINQDataContext ExpenseDB { get; set; }
+        public ObservableCollection<ExpenseTB> OverviewGrid { get; set; }
+        public static double TotalExpense { get; set; }
+        private static OverviewWin _win;
+
+
+        // Command Handlers
         public CommandHandler okButton { get; private set; }
         public CommandHandler deleteButton { get; private set; }
-        public ObservableCollection<Expense> OverviewGrid { get; set; }
+        public CommandHandler saveButton { get; private set; }
 
-        // Input handlers
+        // Input Handlers
+
         private double _total;
         public double Total
         {
             get { return _total; }
-            set { _total = value;  OnPropertyChanged(nameof(Total)); }
+            set { _total = value; OnPropertyChanged(nameof(Total)); }
         }
 
-        private Expense _selectedItem;
-        public Expense SelectedItem
+        private ExpenseTB _selectedItem;
+        public ExpenseTB SelectedItem
         {
             get { return _selectedItem; }
-            set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem));}
+            set { _selectedItem = value; OnPropertyChanged(nameof(SelectedItem)); }
         }
 
-        
 
-        private static OverviewWin _win;
 
         public ExpenseOverviewVM()
         {
-            OverviewGrid = new ObservableCollection<Expense>();
+            ExpenseDB = new ExpenseLINQDataContext(Properties.Settings.Default.ExpenseTrackerDBConnectionString);
+            OverviewGrid = new ObservableCollection<ExpenseTB>();
+            loadData();
             OverviewGrid.CollectionChanged += OnCollectionChanged;
             okButton = new CommandHandler(close);
             deleteButton = new CommandHandler(deleteRow);
+            saveButton = new CommandHandler(saveToDatabase);
 
+        }
+
+        // Methods
+        private void loadData()
+        {
+            foreach (var item in ExpenseDB.ExpenseTBs)
+            {
+                OverviewGrid.Add(item);
+            }
         }
 
         public void openWindow()
         {
             _win = new OverviewWin();
             _win.ShowDialog();
+        }
+
+        private void deleteRow()
+        {
+            OverviewGrid.Remove(SelectedItem);
+            ExpenseDB.ExpenseTBs.DeleteOnSubmit(SelectedItem);
         }
 
         private void close()
@@ -55,12 +83,13 @@ namespace PBOUAS_03
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Total = OverviewGrid.Sum(item => item.Price);
+            Total = ExpenseDB.ExpenseTBs.Sum(item => item.Price);
         }
 
-        private void deleteRow()
+
+        private void saveToDatabase()
         {
-            OverviewGrid.Remove(SelectedItem);
+            ExpenseDB.SubmitChanges();
         }
     }
 }

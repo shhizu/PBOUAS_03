@@ -30,7 +30,7 @@
                   Margin="10,10,10,0"
                   CanUserAddRows="True"
                   AutoGenerateColumns="False"
-                  IsReadOnly="False"
+                  IsReadOnly="False" 
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="*" />

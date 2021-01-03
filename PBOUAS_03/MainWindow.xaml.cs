@@ -18,46 +18,27 @@ namespace PBOUAS_03
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-   
+
     public partial class MainWindow : Window
     {
-        public class Choices : ObservableObject
-        {
-            private string _choice;
-            public string Choice
-            {
-                get
-                {
-                    return _choice;
-                }
-                set
-                {
-                    _choice = value;
-                    OnPropertyChanged(nameof(Choice));
-                }
-            }
-
-        }
-       
+      
         public MainWindow()
         {
             InitializeComponent();
+            Page.Content = new homePage();
         }
 
-        private void BillSplitter_Selected(object sender, RoutedEventArgs e)
+        private void Selected_Item(object sender, RoutedEventArgs e)
         {
+            Button btn = (Button)sender;
+            switch (btn.Content.ToString())
+            {
+                case "Bill Splitter": Page.Content = new billSplitter(); break;
+                case "Expense Tracker": Page.Content = new expenseTracker(); break;
+                case "Tax Calculator": Page.Content = new taxCalculator(); break;
+                default: Page.Content = new homePage(); break;
 
-            Page.Content = new billSplitter();
-        }
-
-        private void TaxCalculator_Selected (object sender, RoutedEventArgs e)
-        {
-            Page.Content = new taxCalculator();
-        }
-
-        private void ExpenseTracker_Selected(object sender, RoutedEventArgs e)
-        {
-            Page.Content = new expenseTracker();
+            }
         }
     }
 }

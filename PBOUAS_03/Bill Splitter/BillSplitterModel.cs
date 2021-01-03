@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PBOUAS_03
 {
@@ -12,6 +13,7 @@ namespace PBOUAS_03
     {
         public string Item { get; set; }
         public double Price { get; set; }
+     
     }
 
     public class Person
@@ -82,7 +84,7 @@ namespace PBOUAS_03
             Fees = Fees / numOfPeople;
             foreach (Split item in groupingQuery)
             {
-                item.ItemsPrice = item.ItemsPrice - ( item.ItemsPrice * (Discount/100) )+ Fees;
+                item.ItemsPrice = item.ItemsPrice - (item.ItemsPrice * (Discount / 100)) + Fees;
                 Collection.Add(item);
             }
 

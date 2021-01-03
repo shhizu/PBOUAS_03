@@ -10,20 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PBOUAS_03
 {
     /// <summary>
-    /// Interaction logic for OverviewWin.xaml
+    /// Interaction logic for homePage.xaml
     /// </summary>
-    public partial class OverviewWin : Window
+    public partial class homePage : Page
     {
-        
-        public OverviewWin()
+        public homePage()
         {
             InitializeComponent();
-            DataContext = expenseTracker.expenseVM; 
+            DataContext = new HomePageVM();
         }
     }
 }

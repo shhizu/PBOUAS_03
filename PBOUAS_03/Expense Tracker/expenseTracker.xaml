@@ -30,7 +30,7 @@
 
         <ComboBox SelectedValue="{Binding Category}" SelectedValuePath="Content"
                   IsEditable="True" IsReadOnly="True" Text="Category"
-                  FontSize="18" HorizontalContentAlignment="Center"
+                  FontSize="16" HorizontalContentAlignment="Center"
                   Grid.Row="1" Grid.Column="2" Margin="5">
             <ComboBoxItem Content="Essentials" />
             <ComboBoxItem Content="Beverages"/>
@@ -47,35 +47,44 @@
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    FontSize="48"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="Item Name:"
-                   Grid.ColumnSpan="2" FontSize="20"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    FontSize="20"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="3" Grid.Column="1" Text="Price:"
-                   Grid.ColumnSpan="2" FontSize="20"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                   FontSize="20"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="Date: "
-                   Grid.ColumnSpan="2" FontSize="20"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    FontSize="20"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
         <!--Text Boxes-->
         <TextBox Text="{Binding ItemName}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
-                 Margin="50,10,5,10"
-                 FontSize="18"  />
+                 Margin="25,5,5,10"
+                 Height="30"
+                 FontSize="18"
+                 Style="{DynamicResource MaterialDesignTextBox}"/>
+        
         <TextBox Text="{Binding Price}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
-                 Margin="50,10,5,10"
-                 FontSize="18"/>
+                 Margin="25,5,5,10"
+                 Height="30"
+                 FontSize="18"
+                 Style="{DynamicResource MaterialDesignTextBox}"/>
 
         <!--Buttons-->
         <Button Command="{Binding addButton}" Grid.Row="5" Grid.Column="1"
                 Grid.ColumnSpan="3" Margin="5" FontSize="16"
                 Content="Add"/>
+     
         <Button Command="{Binding overviewButton}" Grid.Row="6" Grid.Column="1"
                 Grid.ColumnSpan="3" Margin="5" FontSize="16"
                 Content="List Overview"/>
         
         <!--Others-->
         <DatePicker SelectedDate="{Binding Date}" Grid.Row="4" Grid.Column="2"
-                    Grid.ColumnSpan="2" Margin="50, 20 ,5 ,10" FontSize="16"/>
+                    Grid.ColumnSpan="2"
+                    Height="30"
+                    FontSize="16"
+                    Margin="25,21,10,20.2" />
 
 
 

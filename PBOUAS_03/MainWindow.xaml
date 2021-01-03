@@ -13,13 +13,10 @@
          TextOptions.TextRenderingMode="Auto"
          Background="{DynamicResource MaterialDesignPaper}"
          FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+       >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
-
-        </Grid.ColumnDefinitions>
+ 
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -27,51 +24,64 @@
         </Grid.RowDefinitions>
 
         <!--Page Navigation-->
-        <Frame x:Name="Page" Grid.Column="1"  Grid.ColumnSpan="2"
-               Grid.Row="0" Grid.RowSpan="2"/>
+        <Frame x:Name="Page" Grid.Column="0"
+               Grid.Row="0" Grid.RowSpan="2"
+               NavigationUIVisibility="Hidden"/>
 
         <!--Side Panel-->
-        <materialDesign:DrawerHost Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"                  
-                                   HorizontalAlignment="Left" VerticalAlignment="Stretch" >
+        <materialDesign:DrawerHost Grid.Column="0"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.ColumnSpan="2"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch">
             <materialDesign:DrawerHost.LeftDrawerContent>
-                <StackPanel Grid.RowSpan="2" Margin="0" >
-                    <TextBlock Margin="4" HorizontalAlignment="Center"
-                               Text="MENU" FontSize="20"/>
+                <StackPanel Grid.RowSpan="2"
+                            Margin="0">
+                    <TextBlock Margin="4"
+                               HorizontalAlignment="Center"
+                               Text="MENU"
+                               FontSize="20" />
                     <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Left}"
-                        Margin="4" HorizontalAlignment="Left"
-                        Style="{DynamicResource MaterialDesignFlatButton}" 
-                         >
+                            CommandParameter="{x:Static Dock.Left}"
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="Selected_Item">
                         Home
                     </Button>
                     <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4" HorizontalAlignment="Left"
-                        Style="{DynamicResource MaterialDesignFlatButton}"
-                            Click="BillSplitter_Selected">
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="Selected_Item">
                         Bill Splitter
                     </Button>
                     <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4" HorizontalAlignment="Left"
-                        Style="{DynamicResource MaterialDesignFlatButton}"
-                            Click="ExpenseTracker_Selected">
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="Selected_Item">
                         Expense Tracker
                     </Button>
                     <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4" HorizontalAlignment="Left"
-                        Style="{DynamicResource MaterialDesignFlatButton}"
-                            Click="TaxCalculator_Selected">
+                            Margin="4"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            Click="Selected_Item">
                         Tax Calculator
                     </Button>
                 </StackPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
-            <Button VerticalAlignment="Top" HorizontalAlignment="Left"
+            <Button VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
                     Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Left}"
-                        Grid.Row="0" Grid.Column="0"  Margin="4">
+                    CommandParameter="{x:Static Dock.Left}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="4">
                 <materialDesign:PackIcon Kind="DotsVertical" />
             </Button>
         </materialDesign:DrawerHost>
-
-
     </Grid>
 </Window>

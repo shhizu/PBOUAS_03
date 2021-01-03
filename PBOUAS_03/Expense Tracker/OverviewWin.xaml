@@ -13,10 +13,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
@@ -33,15 +34,23 @@
                Grid.Column="1" Margin="15" Content="OK"/>
         <Button Command="{Binding overviewVM.deleteButton}" Grid.Row="3"
                 Grid.Column="0" Margin="15" Content="Delete Row"/>
+        <Button Command="{Binding overviewVM.saveButton}" Grid.Row="4" Margin="3"
+                Grid.ColumnSpan="2"
+                Content="Save" />
 
         <!--Others-->
-        <DataGrid SelectedItem ="{Binding overviewVM.SelectedItem, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="10" Grid.ColumnSpan="2"
-                  ItemsSource="{Binding overviewVM.OverviewGrid}" IsReadOnly="True"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
+        <DataGrid x:Name="Grid"
+                  SelectedItem="{Binding overviewVM.SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                  Grid.Row="1"
+                  Margin="10"
+                  Grid.ColumnSpan="2"
+                  ItemsSource="{Binding overviewVM.OverviewGrid}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False" >
+        <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Date}" Header="Date" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Category}" Header="Category" Width="*"/>
-                <DataGridTextColumn Binding="{Binding ItemName}" Header="Item Name" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Item}" Header="Item" Width="*"/>
                 <DataGridTextColumn Binding="{Binding Price}" Header="Price" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

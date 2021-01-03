@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ExpenseTrackerDB" Class="ExpenseLINQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=ExpenseTrackerDB;Integrated Security=True" SettingsObjectName="PBOUAS_03.Properties.Settings" SettingsPropertyName="ExpenseTrackerDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ExpenseTrackerTB" Member="ExpenseTBs">
+    <Type Name="ExpenseTB">
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Category" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Item" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

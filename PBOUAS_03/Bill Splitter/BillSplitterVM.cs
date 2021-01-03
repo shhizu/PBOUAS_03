@@ -47,6 +47,7 @@ namespace PBOUAS_03
 
             deleteCommand = new CommandHandler(Delete);
 
+           
             calvm = new CalculateVM();
             calculateCommand = new CommandHandler(Show);
  

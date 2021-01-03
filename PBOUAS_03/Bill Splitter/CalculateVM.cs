@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PBOUAS_03
 {
@@ -31,12 +32,20 @@ namespace PBOUAS_03
         {
             get
             {
-                    return _discount;
+                return _discount;
             }
             set
             {
-                _discount = value;
-                OnPropertyChanged(nameof(Discount));
+                try
+                {
+                    _discount = value;
+                    if (_discount < 0 || _discount > 100) { _discount = 0; throw new InvalidLogicException(); }
+                    OnPropertyChanged(nameof(Discount));
+                }
+                catch (InvalidLogicException x)
+                {
+                    MessageBox.Show(x.Message);
+                }
             }
         }
 
@@ -64,17 +73,24 @@ namespace PBOUAS_03
             }
             set
             {
-                _otherFees = value;
-                OnPropertyChanged(nameof(OtherFees));
+                try
+                {
+                    _otherFees = value;
+                    if (_otherFees < 0) { _otherFees = 0; throw new InvalidLogicException(); }
+                    OnPropertyChanged(nameof(OtherFees));
+                }
+                catch (InvalidLogicException x)
+                {
+                    MessageBox.Show(x.Message);
+                }
             }
         }
 
         public CalculateVM()
         {
+
             Calculate = new Calculate();
             okButton = new CommandHandler(Calculate.CloseWindow);
-
-           
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PBOUAS_03
 {
@@ -18,8 +19,14 @@ namespace PBOUAS_03
             }
             set
             {
-                _income = value;
-                OnPropertyChanged(nameof(Income));
+                try
+                {
+                    _income = value;
+                    if (_income < 0) { _income = 0; throw new InvalidLogicException(); }
+                    OnPropertyChanged(nameof(Income));
+                }
+                catch(InvalidLogicException x){MessageBox.Show(x.Message);}
+
             }
         }
 
@@ -32,14 +39,22 @@ namespace PBOUAS_03
             }
             set
             {
-                _tax = value;
-                OnPropertyChanged(nameof(Tax));
+                try
+                {
+                    string temp = value.ToString();
+                    if (double.TryParse(temp, out _tax)) { _tax = value; }
+                    else { value = 0; }
+                    if  (_tax < 0 || _tax > 100) { _tax = 0; throw new InvalidLogicException();}
+                  
+                }
+                catch(FormatException x) { MessageBox.Show(x.Message);}
+                catch(InvalidLogicException x) { MessageBox.Show(x.Message);  }
             }
         }
         public CommandHandler submitButton { get; set; }
         public ObservableCollection<TaxCalculator> Calculation { get; set; }
-
-        public TaxCalculatorVM() // Constructor
+       
+        public TaxCalculatorVM() 
         {
             Calculation = new ObservableCollection<TaxCalculator>();
             submitButton = new CommandHandler(submit);
@@ -47,11 +62,12 @@ namespace PBOUAS_03
 
         private void submit()
         {
+            Calculation.Clear();
             double total = Income + (Income * (Tax / 100));
             Calculation.Add(new TaxCalculator("Income: Rp.", Income));
             Calculation.Add(new TaxCalculator("Tax: %", Tax));
             Calculation.Add(new TaxCalculator("Total: Rp.", total));
-            Calculation = new ObservableCollection<TaxCalculator>();
         }
+
     }
 }

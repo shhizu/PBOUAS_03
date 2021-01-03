@@ -10,8 +10,8 @@ namespace PBOUAS_03
 {
     public class ExpenseTrackerVM : ObservableObject // Inhertance
     {
-        //public string Message { get; set; }
-        public  List<Expense> Expenses { get; set; }
+
+        public List<Expense> Expenses { get; set; }
         public ExpenseOverviewVM overviewVM { get; set; }
 
 
@@ -48,8 +48,8 @@ namespace PBOUAS_03
             }
         }
 
-        private double _price;
-        public double Price
+        private float _price;
+        public float Price
         {
             get
             {
@@ -102,8 +102,20 @@ namespace PBOUAS_03
 
         private void add()
         {
-            overviewVM.OverviewGrid.Add(new Expense(ItemName, Price, Date, Category));
-            MessageBoxResult message = MessageBox.Show("Your item has been added");
+            try
+            {
+                if (string.IsNullOrEmpty(ItemName)) { throw new EmptyException(); }
+                ExpenseTB tb = new ExpenseTB();
+                tb.Item = ItemName;
+                tb.Price = Price;
+                tb.Date = Date;
+                tb.Category = Category;
+                overviewVM.OverviewGrid.Add(tb);
+                ExpenseOverviewVM.ExpenseDB.ExpenseTBs.InsertOnSubmit(tb);
+                ExpenseOverviewVM.ExpenseDB.SubmitChanges();
+                MessageBoxResult message = MessageBox.Show("Your item has been added");
+            }
+            catch(EmptyException x) { MessageBox.Show(x.Message); }
         }
 
     }

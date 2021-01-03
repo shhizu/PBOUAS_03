@@ -13,7 +13,6 @@ namespace PBOUAS_03
 
         private double _income;
         private double _tax;
-
         public TaxCalculator(string Type, double Amount)
         {
             this.Type = Type;
